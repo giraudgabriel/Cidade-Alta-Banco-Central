@@ -12,6 +12,7 @@ namespace BancoCentral.Infra.Repositories
         private readonly long? _userId;
 
         private ITransactionRepository _transactionRepository;
+        private IUserRepository _userRepository;
 
         public RepositoryUnitOfWork(DbContext dbContext, long? userId)
         {
@@ -21,6 +22,9 @@ namespace BancoCentral.Infra.Repositories
 
         public ITransactionRepository TransactionRepository =>
             _transactionRepository ??= new TransactionRepository(_dbContext);
+
+        public IUserRepository UserRepository =>
+            _userRepository ??= new UserRepository(_dbContext);
 
         public void Dispose()
         {

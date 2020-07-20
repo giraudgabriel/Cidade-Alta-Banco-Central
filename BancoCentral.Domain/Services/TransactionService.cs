@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using BancoCentral.Domain.Entities;
 using BancoCentral.Domain.Enums;
 using BancoCentral.Domain.Repositories;
@@ -15,7 +17,7 @@ namespace BancoCentral.Domain.Services
             _repository = repository;
         }
 
-        public EntityEntry<Transaction> Deposit(decimal amount, long userId)
+        public EntityEntry<Transaction> Deposit(decimal amount, int userId)
         {
             if (amount <= 0) throw new Exception("O valor deve ser maior que zero!");
             var deposit = new Transaction
@@ -27,9 +29,8 @@ namespace BancoCentral.Domain.Services
             return _repository.Add(deposit);
         }
 
-        public EntityEntry<Transaction> Transfer(decimal amount, long userId, long userIdDestiny)
+        public EntityEntry<Transaction> Transfer(decimal amount, int userId, int userIdDestiny)
         {
-            if (amount <= 0) throw new Exception("O valor deve ser maior que zero!");
             var transfer = new Transaction
             {
                 UserId = userId,
@@ -40,7 +41,7 @@ namespace BancoCentral.Domain.Services
             return _repository.Add(transfer);
         }
 
-        public EntityEntry<Transaction> Withdraw(decimal amount, long userId)
+        public EntityEntry<Transaction> Withdraw(decimal amount, int userId)
         {
             if (amount <= 0) throw new Exception("O valor deve ser maior que zero!");
             var withdraw = new Transaction
@@ -50,6 +51,11 @@ namespace BancoCentral.Domain.Services
                 Type = TypeTransaction.Withdraw
             };
             return _repository.Add(withdraw);
+        }
+
+        public IEnumerable<Transaction> Extract(DateTime startDate, DateTime endDate)
+        {
+            return _repository.GetExtractByDate(startDate, endDate);
         }
     }
 }

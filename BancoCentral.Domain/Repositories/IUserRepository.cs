@@ -1,7 +1,8 @@
-﻿namespace BancoCentral.Domain.Repositories
+﻿using BancoCentral.Domain.Entities;
+
+namespace BancoCentral.Domain.Repositories
 {
-    public interface IUserRepository
+    public interface IUserRepository : IRepository<User>
     {
-        
     }
 }

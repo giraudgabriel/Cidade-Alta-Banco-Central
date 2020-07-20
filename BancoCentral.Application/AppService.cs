@@ -11,12 +11,12 @@ namespace BancoCentral.Application
     public abstract class AppService<T> : IDisposable where T : class, IEntity
     {
         protected readonly RepositoryUnitOfWork UnitOfWork;
-        private readonly long? _userId;
+        private readonly int? _userId;
 
         protected AppService(long? userId)
         {
             var dbContext = new BancoCentralDbContext();
-            _userId = userId ?? _userId;
+            _userId = (int?) (userId ?? _userId);
             UnitOfWork = new RepositoryUnitOfWork(dbContext, _userId);
         }
 

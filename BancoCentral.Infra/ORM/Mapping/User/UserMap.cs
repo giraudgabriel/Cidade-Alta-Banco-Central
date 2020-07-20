@@ -13,6 +13,8 @@ namespace BancoCentral.Infra.ORM.Mapping.User
             builder.Property(u => u.AmountBank).HasColumnName("amountBank").IsRequired();
             builder.Property(u => u.AmountWallet).HasColumnName("amountWallet").IsRequired();
             builder.Property(u => u.Name).HasColumnName("name").HasMaxLength(150).IsRequired();
+            builder.Property(u => u.Whitelist).HasColumnName("whitelist").IsRequired();
+            builder.Property(u => u.UpdatedAt).HasColumnName("updatedAt").IsRequired();
         }
     }
 }

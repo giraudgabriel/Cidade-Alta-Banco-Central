@@ -2,7 +2,6 @@
 {
     public interface IEntityUser : IEntity
     {
-        long Id { get; set; }
-        long UserId { get; set; }
+        int UserId { get; set; }
     }
 }
