@@ -1,38 +1,32 @@
 import React, {Component} from 'react';
-
 import {Link} from 'react-router-dom';
+import {FaRegListAlt, FaWallet, FaEnvelopeOpenText, FaExchangeAlt} from 'react-icons/fa';
 
 export class Home extends Component {
     static displayName = Home.name;
-
-    componentDidMount() {
-        fetch("api/transaction/extract/2020-07-20/2020-07-20").then(response => {
-            response.json().then(json => {
-                console.log(json)
-            })
-        })
-    }
 
     render() {
         return (
             <>
                 <div className="row mb-3">
                     <div className="col-lg-6">
-                        <Link to="/withdraw" className="btn btn-success btn-block btn-lg">Saque
+                        <Link to="/withdraw" className="btn btn-success btn-block btn-lg"><h1><FaWallet/> Saque</h1>
                         </Link>
                     </div>
                     <div className="col-lg-6">
-                        <Link to="/deposit" className="btn btn-warning btn-block btn-lg">Depositar
+                        <Link to="/deposit" className="btn btn-warning btn-block btn-lg"><h1>
+                            <FaEnvelopeOpenText/> Depositar</h1>
                         </Link>
                     </div>
                 </div>
                 <div className="row mb-3">
                     <div className="col-lg-6">
-                        <Link to="/transfer" className="btn btn-primary btn-block btn-lg">Transferência
+                        <Link to="/transfer" className="btn btn-primary btn-block btn-lg"><h1>
+                            <FaExchangeAlt/> Transferência</h1>
                         </Link>
                     </div>
                     <div className="col-lg-6">
-                        <Link to="/extract" className="btn btn-info btn-block btn-lg">Extrato
+                        <Link to="/extract" className="btn btn-info btn-block btn-lg"><h1><FaRegListAlt/> Extrato</h1>
                         </Link>
                     </div>
                 </div>

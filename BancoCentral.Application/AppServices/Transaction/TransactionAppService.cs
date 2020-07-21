@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using BancoCentral.Domain.Objects;
 using BancoCentral.Domain.Services;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
@@ -24,10 +25,10 @@ namespace BancoCentral.Application.AppServices.Transaction
         {
             if (amount <= 0) throw new Exception("O valor deve ser maior que zero!");
 
-            var userDestiny = await _userService.FindByIdAsync(userIdDestiny);
+            var userDestiny = await _userService.FindFirstAsync(u => u.Id == userIdDestiny);
             if (userDestiny == null) throw new Exception("Passaporte inválido!");
 
-            var user = await _userService.FindByIdAsync(_userId);
+            var user = await _userService.FindFirstAsync(u => u.Id == _userId);
             if (user.AmountBank < amount)
                 throw new Exception("Você não possui a quantia necessária no banco para transferir!");
 
@@ -47,7 +48,7 @@ namespace BancoCentral.Application.AppServices.Transaction
         {
             if (amount <= 0) throw new Exception("O valor deve ser maior que zero!");
 
-            var user = await _userService.FindByIdAsync(_userId);
+            var user = await _userService.FindFirstAsync(u => u.Id == _userId);
             if (user.AmountBank < amount) throw new Exception("Você não possui a quantia no banco!");
 
             var withdraw = _transactionService.Withdraw(amount, _userId);
@@ -65,7 +66,7 @@ namespace BancoCentral.Application.AppServices.Transaction
         {
             if (amount <= 0) throw new Exception("O valor deve ser maior que zero!");
 
-            var user = await _userService.FindByIdAsync(_userId);
+            var user = await _userService.FindFirstAsync(u => u.Id == _userId);
             if (user.AmountWallet < amount) throw new Exception("Você não possui a quantia na carteira!");
 
             var deposit = _transactionService.Deposit(amount, _userId);
@@ -79,9 +80,11 @@ namespace BancoCentral.Application.AppServices.Transaction
             return deposit;
         }
 
-        public IEnumerable<Domain.Entities.Transaction> Extract(DateTime startDate, DateTime endDate)
+        public Set<Domain.Entities.Transaction> Extract(DateTime startDate, DateTime endDate, int page, int qtdRecords)
         {
-            return _transactionService.Extract(startDate, endDate, _userId);
+            var records =
+                _transactionService.Extract(startDate, endDate, _userId, page, qtdRecords, out var totalRecords);
+            return new Set<Domain.Entities.Transaction>(totalRecords, records);
         }
     }
 }

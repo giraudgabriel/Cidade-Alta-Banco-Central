@@ -24,4 +24,6 @@ ALTER TABLE TRANSACTION ADD CONSTRAINT foreign key(userId) REFERENCES USER(userI
 ALTER TABLE TRANSACTION ADD CONSTRAINT foreign key(userIdDestiny) REFERENCES USER(userId);
 
 INSERT INTO USER (amountBank, amountWallet, name, whitelist, updatedAt) VALUES('50000.0', '5000.0', 'GABRIEL GIRAUD', true, sysdate());
-insert into transaction values(null,'1', null, '50000', sysdate(), '1');
+INSERT INTO USER (amountBank, amountWallet, name, whitelist, updatedAt) VALUES('50000.0', '5000.0', 'DRKZ', true, sysdate());
+insert into transaction values(null,'1', null, '50000', sysdate(), '0');
+insert into transaction values(null,'1', '2', '50000', sysdate(), '1');

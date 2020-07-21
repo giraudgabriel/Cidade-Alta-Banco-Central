@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using BancoCentral.Application.AppServices.Transaction;
 using BancoCentral.Domain.Entities;
+using BancoCentral.Domain.Objects;
 using BancoCentral.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -24,29 +25,29 @@ namespace BancoCentral.Controllers
             _logger = logger;
         }
 
-        [HttpGet("extract/{startDate:DateTime}/{endDate:DateTime}")]
-        public IEnumerable<Transaction> Extract(DateTime startDate, DateTime endDate)
+        [HttpGet("extract/{startDate:DateTime}/{endDate:DateTime}/{page:int}/{qtdRecords:int}")]
+        public Set<Transaction> Extract(DateTime startDate, DateTime endDate, int page, int qtdRecords)
         {
             if (!ModelState.IsValid) throw new Exception(ModelState.ToString());
-            return _transactionAppService.Extract(startDate, endDate);
+            return _transactionAppService.Extract(startDate, endDate, page, qtdRecords);
         }
 
         [HttpPost]
-        public Task<EntityEntry<Transaction>> Transfer(TransferViewModel transferViewModel)
+        public Task<EntityEntry<Transaction>> Transfer([FromBody]TransferViewModel transferViewModel)
         {
             if (!ModelState.IsValid) throw new Exception(ModelState.ToString());
             return _transactionAppService.Transfer(transferViewModel.Amount, transferViewModel.Passport);
         }
 
-        [HttpPost]
-        public Task<EntityEntry<Transaction>> Deposit(DepositViewModel depositViewModel)
+        [HttpPost("deposit")]
+        public Task<EntityEntry<Transaction>> Deposit([FromBody]decimal amount)
         {
             if (!ModelState.IsValid) throw new Exception(ModelState.ToString());
-            return _transactionAppService.Deposit(depositViewModel.Amount);
+            return _transactionAppService.Deposit(amount);
         }
 
         [HttpPost]
-        public Task<EntityEntry<Transaction>> Withdraw(DepositViewModel depositViewModel)
+        public Task<EntityEntry<Transaction>> Withdraw([FromBody]DepositViewModel depositViewModel)
         {
             if (!ModelState.IsValid) throw new Exception(ModelState.ToString());
             return _transactionAppService.Withdraw(depositViewModel.Amount);

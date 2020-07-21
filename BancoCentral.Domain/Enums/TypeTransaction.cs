@@ -1,9 +1,11 @@
-﻿namespace BancoCentral.Domain.Enums
+﻿using System.ComponentModel;
+
+namespace BancoCentral.Domain.Enums
 {
     public enum TypeTransaction
     {
-        Deposit,
-        Transfer,
-        Withdraw
+        [Description("Depósito")] Deposit,
+        [Description("Transferência")] Transfer,
+        [Description("Saque")] Withdraw
     }
 }

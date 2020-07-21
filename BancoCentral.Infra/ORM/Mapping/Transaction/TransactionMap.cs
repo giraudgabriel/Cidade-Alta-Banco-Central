@@ -14,9 +14,9 @@ namespace BancoCentral.Infra.ORM.Mapping.Transaction
             builder.HasOne(t => t.User)
                 .WithMany(u => u.Transactions)
                 .HasForeignKey(t => t.UserId);
-
+                
             builder.HasOne(t => t.UserDestiny)
-                .WithMany(u => u.TransactionsReceived)
+                .WithMany()
                 .HasForeignKey(t => t.UserIdDestiny);
 
             builder.Property(t => t.Id)

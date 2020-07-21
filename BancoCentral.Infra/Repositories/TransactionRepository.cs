@@ -17,10 +17,22 @@ namespace BancoCentral.Infra.Repositories
             _dbContext = dbContext;
         }
 
-        public IEnumerable<Transaction> GetExtractByDate(DateTime startDate, DateTime endDate, int userId)
+        public IEnumerable<Transaction> GetExtractByDate(DateTime startDate, DateTime endDate, int userId, int page,
+            int qtdRecords, out int totalRecords)
         {
-            var extract = _dbContext.Transactions.Where(t =>
-                t.DateTime.Date >= startDate.Date && t.DateTime.Date <= endDate.Date && t.UserId == userId);
+            var extract = _dbContext.Transactions
+                .Include(t => t.UserDestiny)
+                .Where(t => t.DateTime.Date >= startDate.Date
+                            && t.DateTime.Date <= endDate.Date
+                            && (t.UserId == userId || t.UserIdDestiny == userId));
+
+            totalRecords = _dbContext.Transactions
+                .Count(t => t.DateTime.Date >= startDate.Date
+                            && t.DateTime.Date <= endDate.Date
+                            && (t.UserId == userId || t.UserIdDestiny == userId));
+
+            ApplyPagination(ref extract, page, qtdRecords, t => t.DateTime);
+
             return extract;
         }
     }

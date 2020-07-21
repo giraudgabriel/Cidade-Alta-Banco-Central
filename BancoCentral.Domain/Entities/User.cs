@@ -11,7 +11,6 @@ namespace BancoCentral.Domain.Entities
         public string Name { get; set; } = string.Empty;
         public bool Whitelist { get; set; } = false;
         public DateTime UpdatedAt { get; set; } = DateTime.Now;
-        public virtual ICollection<Transaction> Transactions { get; set; } = new HashSet<Transaction>();
-        public virtual ICollection<Transaction> TransactionsReceived { get; set; } = new HashSet<Transaction>();
+        public virtual IEnumerable<Transaction> Transactions { get; } = new HashSet<Transaction>();
     }
 }

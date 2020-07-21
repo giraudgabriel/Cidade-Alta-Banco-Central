@@ -82,7 +82,7 @@ namespace BancoCentral.Infra.Repositories
                 ? await _dbContext.Set<T>().LongCountAsync()
                 : await _dbContext.Set<T>().LongCountAsync(predicate);
 
-        private static void ApplyPagination<TKey>(ref IQueryable<T> query, int? page, int? qtdRecords,
+        protected static void ApplyPagination<TKey>(ref IQueryable<T> query, int? page, int? qtdRecords,
             Expression<Func<T, TKey>> orderByExpression)
         {
             if (page.HasValue && qtdRecords.HasValue)
@@ -90,7 +90,7 @@ namespace BancoCentral.Infra.Repositories
                     .Take(qtdRecords.Value);
         }
 
-        private static void ApplyPagination(ref IQueryable<T> query, int? page, int? qtdRecords)
+        protected static void ApplyPagination(ref IQueryable<T> query, int? page, int? qtdRecords)
         {
             if (page.HasValue && qtdRecords.HasValue)
                 query = query.OrderBy(x => x.Id).Skip((page.Value - 1) * qtdRecords.Value).Take(qtdRecords.Value);

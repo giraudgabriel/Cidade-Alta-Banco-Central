@@ -1,11 +1,22 @@
 import React, { Component } from 'react'
+import {InputGroup, InputGroupAddon} from "reactstrap";
+import CurrencyInput from "react-currency-masked-input";
+import {FaRegMoneyBillAlt} from "react-icons/fa";
 
 export class Withdraw extends Component {
   render() {
     return (
-      <div>
-        
-      </div>
+        <div className="container">
+          <label className="badge badge-warning">Valor para sacar:</label>
+          <InputGroup>
+            <InputGroupAddon addonType="prepend">R$</InputGroupAddon>
+            <CurrencyInput className="form-control form-control-lg text-success"
+                           placeholder="0,00"/>
+            <InputGroupAddon addonType="append">
+              <button className="btn btn-success btn-lg"><FaRegMoneyBillAlt/> Sacar</button>
+            </InputGroupAddon>
+          </InputGroup>
+        </div>
     )
   }
 }

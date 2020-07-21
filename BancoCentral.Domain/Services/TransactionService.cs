@@ -19,7 +19,6 @@ namespace BancoCentral.Domain.Services
 
         public EntityEntry<Transaction> Deposit(decimal amount, int userId)
         {
-            if (amount <= 0) throw new Exception("O valor deve ser maior que zero!");
             var deposit = new Transaction
             {
                 UserId = userId,
@@ -43,7 +42,6 @@ namespace BancoCentral.Domain.Services
 
         public EntityEntry<Transaction> Withdraw(decimal amount, int userId)
         {
-            if (amount <= 0) throw new Exception("O valor deve ser maior que zero!");
             var withdraw = new Transaction
             {
                 UserId = userId,
@@ -53,9 +51,10 @@ namespace BancoCentral.Domain.Services
             return _repository.Add(withdraw);
         }
 
-        public IEnumerable<Transaction> Extract(DateTime startDate, DateTime endDate, int userId)
+        public IEnumerable<Transaction> Extract(DateTime startDate, DateTime endDate, int userId, int page,
+            int qtdRecords, out int totalRecords)
         {
-            return _repository.GetExtractByDate(startDate, endDate, userId);
+            return _repository.GetExtractByDate(startDate, endDate, userId, page, qtdRecords, out totalRecords);
         }
     }
 }
