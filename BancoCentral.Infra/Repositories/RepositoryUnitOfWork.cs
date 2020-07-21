@@ -1,20 +1,21 @@
 ﻿using BancoCentral.Domain.Repositories;
 using System;
 using System.Threading.Tasks;
+using BancoCentral.Infra.ORM.Contexts;
 using Microsoft.EntityFrameworkCore;
 
 namespace BancoCentral.Infra.Repositories
 {
     public class RepositoryUnitOfWork : IRepositoryUnitOfWork
     {
-        private readonly DbContext _dbContext;
+        private readonly BancoCentralDbContext _dbContext;
         private bool _disposed;
         private readonly long? _userId;
 
         private ITransactionRepository _transactionRepository;
         private IUserRepository _userRepository;
 
-        public RepositoryUnitOfWork(DbContext dbContext, long? userId)
+        public RepositoryUnitOfWork(BancoCentralDbContext dbContext, long? userId)
         {
             this._dbContext = dbContext;
             this._userId = userId;

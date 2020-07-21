@@ -1,7 +1,9 @@
-﻿using BancoCentral.Domain.Entities;
+﻿using System;
+using BancoCentral.Domain.Entities;
 using BancoCentral.Infra.ORM.Mapping.Transaction;
 using BancoCentral.Infra.ORM.Mapping.User;
 using Microsoft.EntityFrameworkCore;
+using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 
 namespace BancoCentral.Infra.ORM.Contexts
 {
@@ -14,10 +16,12 @@ namespace BancoCentral.Infra.ORM.Contexts
                 Server = "localhost",
                 Database = "cidadealta",
                 User = "root",
-                Password = ""
+                Password = "1234"
             };
 
-            optionsBuilder.UseMySql(databaseConfiguration.ToString());
+            optionsBuilder.UseMySql(databaseConfiguration.ToString(), mySqlOptions => mySqlOptions
+                .ServerVersion(new Version(5, 7, 31), ServerType.MySql)
+            );
         }
 
         public DbSet<User> Users { get; set; }

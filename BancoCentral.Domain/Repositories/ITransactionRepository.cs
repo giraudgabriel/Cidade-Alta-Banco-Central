@@ -6,6 +6,6 @@ namespace BancoCentral.Domain.Repositories
 {
     public interface ITransactionRepository : IRepository<Transaction>
     {
-        IEnumerable<Transaction> GetExtractByDate(DateTime startDate, DateTime endDate);
+        IEnumerable<Transaction> GetExtractByDate(DateTime startDate, DateTime endDate, int userId);
     }
 }

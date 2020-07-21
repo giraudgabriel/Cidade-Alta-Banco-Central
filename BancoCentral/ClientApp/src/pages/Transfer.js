@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-export class Saque extends Component {
+export class Transfer extends Component {
   render() {
     return (
       <div>

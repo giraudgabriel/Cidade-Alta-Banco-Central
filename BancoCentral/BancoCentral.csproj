@@ -26,10 +26,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ClientApp\src\pages" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\BancoCentral.Application\BancoCentral.Application.csproj" />
     <ProjectReference Include="..\BancoCentral.Domain\BancoCentral.Domain.csproj" />
   </ItemGroup>

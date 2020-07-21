@@ -81,7 +81,7 @@ namespace BancoCentral.Application.AppServices.Transaction
 
         public IEnumerable<Domain.Entities.Transaction> Extract(DateTime startDate, DateTime endDate)
         {
-            return _transactionService.Extract(startDate, endDate);
+            return _transactionService.Extract(startDate, endDate, _userId);
         }
     }
 }

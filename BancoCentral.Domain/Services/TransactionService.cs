@@ -53,9 +53,9 @@ namespace BancoCentral.Domain.Services
             return _repository.Add(withdraw);
         }
 
-        public IEnumerable<Transaction> Extract(DateTime startDate, DateTime endDate)
+        public IEnumerable<Transaction> Extract(DateTime startDate, DateTime endDate, int userId)
         {
-            return _repository.GetExtractByDate(startDate, endDate);
+            return _repository.GetExtractByDate(startDate, endDate, userId);
         }
     }
 }

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-export class Transferencia extends Component {
+export class Withdraw extends Component {
   render() {
     return (
       <div>

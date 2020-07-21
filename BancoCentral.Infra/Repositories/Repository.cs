@@ -43,10 +43,8 @@ namespace BancoCentral.Infra.Repositories
             try
             {
                 totalRecords = _dbContext.Set<T>().LongCount(predicate);
-
                 var query = _dbContext.Set<T>().Where(predicate);
                 ApplyPagination(ref query, page, qtdRecords);
-
                 return query;
             }
             catch (Exception ex)
@@ -62,10 +60,8 @@ namespace BancoCentral.Infra.Repositories
             try
             {
                 totalRecords = _dbContext.Set<T>().LongCount(predicate);
-
                 var query = _dbContext.Set<T>().Where(predicate);
                 ApplyPagination(ref query, page, qtdRecords, orderByExpression);
-
                 return query;
             }
             catch (Exception ex)

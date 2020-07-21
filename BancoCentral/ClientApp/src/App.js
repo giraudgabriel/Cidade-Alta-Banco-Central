@@ -1,26 +1,32 @@
-import React, { Component } from 'react';
-import { Route } from 'react-router';
-import { Layout } from './components/Layout';
-import { Home } from './components/Home';
-import { Extrato } from './components/Extrato';
-import { Deposito } from './components/Deposito';
-import { Transferencia } from './components/Transferencia';
-import { Saque } from './components/Saque';
-
+import React, {Component} from 'react';
+import {Route} from 'react-router';
+import {Home} from './pages/Home';
+import {Extract} from './pages/Extract';
+import {Deposit} from './pages/Deposit';
+import {Transfer} from './pages/Transfer';
+import {Withdraw} from './pages/Withdraw';
 import './custom.css'
+import CardHeader from "reactstrap/es/CardHeader";
+import CardBody from "reactstrap/es/CardBody";
+import Card from "reactstrap/es/Card";
 
 export default class App extends Component {
-  static displayName = App.name;
-
-  render () {
-    return (
-      <Layout>
-        <Route exact path='/' component={Home} />
-        <Route path='/extrato' component={Extrato} />
-        <Route path='/deposito' component={Deposito} />
-        <Route path='/transferencia' component={Transferencia} />
-        <Route path='/saque' component={Saque} />
-      </Layout>
-    );
-  }
+    render() {
+        return (
+            <div className="container mt-5">
+                <Card>
+                    <CardHeader className="text-center">
+                        <h3>Cidade Alta</h3>
+                    </CardHeader>
+                    <CardBody>
+                        <Route exact path='/' component={Home}/>
+                        <Route path='/extract' component={Extract}/>
+                        <Route path='/deposit' component={Deposit}/>
+                        <Route path='/transfer' component={Transfer}/>
+                        <Route path='/withdraw' component={Withdraw}/>
+                    </CardBody>
+                </Card>
+            </div>
+        );
+    }
 }

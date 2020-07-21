@@ -12,7 +12,7 @@ using Microsoft.Extensions.Logging;
 namespace BancoCentral.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class TransactionController : ControllerBase
     {
         private readonly ILogger<TransactionController> _logger;
@@ -20,20 +20,18 @@ namespace BancoCentral.Controllers
 
         public TransactionController(ILogger<TransactionController> logger)
         {
-            _transactionAppService = new TransactionAppService(HttpContext.Session.GetInt32("userId") ?? 1);
+            _transactionAppService = new TransactionAppService(HttpContext?.Session?.GetInt32("userId") ?? 1);
             _logger = logger;
         }
 
-        [HttpGet]
-        [Route("/extract")]
-        public IEnumerable<Transaction> Extract(ExtractViewModel extractViewModel)
+        [HttpGet("extract/{startDate:DateTime}/{endDate:DateTime}")]
+        public IEnumerable<Transaction> Extract(DateTime startDate, DateTime endDate)
         {
             if (!ModelState.IsValid) throw new Exception(ModelState.ToString());
-            return _transactionAppService.Extract(extractViewModel.StartDate, extractViewModel.EndDate);
+            return _transactionAppService.Extract(startDate, endDate);
         }
 
         [HttpPost]
-        [Route("/transfer")]
         public Task<EntityEntry<Transaction>> Transfer(TransferViewModel transferViewModel)
         {
             if (!ModelState.IsValid) throw new Exception(ModelState.ToString());
@@ -41,7 +39,6 @@ namespace BancoCentral.Controllers
         }
 
         [HttpPost]
-        [Route("/deposit")]
         public Task<EntityEntry<Transaction>> Deposit(DepositViewModel depositViewModel)
         {
             if (!ModelState.IsValid) throw new Exception(ModelState.ToString());
@@ -49,7 +46,6 @@ namespace BancoCentral.Controllers
         }
 
         [HttpPost]
-        [Route("/withdraw")]
         public Task<EntityEntry<Transaction>> Withdraw(DepositViewModel depositViewModel)
         {
             if (!ModelState.IsValid) throw new Exception(ModelState.ToString());
