@@ -4,13 +4,13 @@ import Form from "reactstrap/es/Form";
 import FormGroup from "reactstrap/es/FormGroup";
 import Input from "reactstrap/es/Input";
 import FormText from "reactstrap/es/FormText";
-import FormFeedback from "reactstrap/es/FormFeedback";
 import PaginationComponent from "react-reactstrap-pagination";
 import Label from "reactstrap/es/Label";
+import moment from 'moment';
 
 export function Extract() {
-    const [startDate, setStartDate] = useState(new Date().toISOString().slice(0, 10));
-    const [endDate, setEndDate] = useState(new Date().toISOString().slice(0, 10));
+    const [startDate, setStartDate] = useState(moment().format("YYYY-MM-DD"));
+    const [endDate, setEndDate] = useState(moment().format("YYYY-MM-DD"));
     const [extracts, setExtracts] = useState([]);
     const [page, setPage] = useState(1);
     const [qtdRecords, setQtdRecords] = useState(5);
@@ -27,7 +27,12 @@ export function Extract() {
     }
 
     const fetchData = useCallback(() => {
-        fetch(`api/transaction/extract/${startDate}/${endDate}/${page}/${qtdRecords}`).then(response => {
+        fetch(`api/transaction/extract/${startDate}/${endDate}/${page}/${qtdRecords}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        }).then(response => {
             console.log(startDate, endDate)
             response.json().then(({records, totalRecords}) => {
                 setExtracts(records);
@@ -77,7 +82,6 @@ export function Extract() {
                             <label className="badge table-warning"><FaCalendar/> Data Inicial</label>
                             <Input className="form-control form-control-sm" value={startDate}
                                    onChange={(e) => setStartDate(e.target.value)} type="date"/>
-                            <FormFeedback invalid>Digite um data válida</FormFeedback>
                             <FormText>Data inicial a ser filtrado o extrato</FormText>
                         </FormGroup>
                     </Form>
@@ -88,7 +92,6 @@ export function Extract() {
                             <label className="badge table-warning"><FaCalendar/> Data Final</label>
                             <Input className="form-control form-control-sm" value={endDate}
                                    onChange={(e) => setEndDate(e.target.value)} type="date"/>
-                            <FormFeedback invalid>Digite um data válida</FormFeedback>
                             <FormText>Data Final a ser filtrado o extrato</FormText>
                         </FormGroup>
                     </Form>
@@ -113,18 +116,18 @@ export function Extract() {
                         <Label for="selectItensPerPage" className={"badge table-warning"}><FaList/> Itens por
                             página</Label>
                         <select className={"form-control form-control-sm"} value={qtdRecords}
-                                onChange={(e) => setQtdRecords(e.target.value)}>
+                                onChange={(e) => setQtdRecords(parseInt(e.target.value))}>
                             <option value="">Selecione</option>
                             <option value={5}>5</option>
                             <option value={10}>10</option>
                             <option value={15}>15</option>
                         </select>
                     </div>
-                    <div className={"col ml-5"} >
+                    <div className={"col ml-5"}>
                         <Label className={"badge table-warning"}><FaBook/> Total de Registros: {totalRecords}</Label>
-                            <PaginationComponent totalItems={totalRecords} pageSize={qtdRecords} onSelect={handlePageChange}
-                                                 firstPageText={"Primeira"} lastPageText={"Última"} nextPageText={"Próxima"}
-                                                 previousPageText={"Anterior"} size={"sm"}/>
+                        <PaginationComponent totalItems={totalRecords} pageSize={qtdRecords} onSelect={handlePageChange}
+                                             firstPageText={"Primeira"} lastPageText={"Última"} nextPageText={"Próxima"}
+                                             previousPageText={"Anterior"} size={"sm"}/>
                     </div>
                 </div>
             </div>

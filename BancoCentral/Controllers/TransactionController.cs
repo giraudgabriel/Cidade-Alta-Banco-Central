@@ -13,7 +13,7 @@ using Microsoft.Extensions.Logging;
 namespace BancoCentral.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/transaction")]
     public class TransactionController : ControllerBase
     {
         private readonly ILogger<TransactionController> _logger;
@@ -26,31 +26,35 @@ namespace BancoCentral.Controllers
         }
 
         [HttpGet("extract/{startDate:DateTime}/{endDate:DateTime}/{page:int}/{qtdRecords:int}")]
-        public Set<Transaction> Extract(DateTime startDate, DateTime endDate, int page, int qtdRecords)
+        public ActionResult<Set<Transaction>> Extract(DateTime startDate, DateTime endDate, int page, int qtdRecords)
         {
             if (!ModelState.IsValid) throw new Exception(ModelState.ToString());
             return _transactionAppService.Extract(startDate, endDate, page, qtdRecords);
         }
 
-        [HttpPost]
-        public Task<EntityEntry<Transaction>> Transfer([FromBody]TransferViewModel transferViewModel)
+        [HttpPost("transfer")]
+        public async Task<ActionResult<Transaction>> Transfer(
+            [FromBody] TransferViewModel transferViewModel)
         {
             if (!ModelState.IsValid) throw new Exception(ModelState.ToString());
-            return _transactionAppService.Transfer(transferViewModel.Amount, transferViewModel.Passport);
+            var transfer = await _transactionAppService.Transfer(transferViewModel.Amount, transferViewModel.Passport);
+            return transfer;
         }
 
         [HttpPost("deposit")]
-        public Task<EntityEntry<Transaction>> Deposit([FromBody]decimal amount)
+        public async Task<ActionResult<Transaction>> Deposit([FromBody] decimal amount)
         {
             if (!ModelState.IsValid) throw new Exception(ModelState.ToString());
-            return _transactionAppService.Deposit(amount);
+            var deposit = await _transactionAppService.Deposit(amount);
+            return deposit;
         }
 
-        [HttpPost]
-        public Task<EntityEntry<Transaction>> Withdraw([FromBody]DepositViewModel depositViewModel)
+        [HttpPost("withdraw")]
+        public async Task<ActionResult<Transaction>> Withdraw([FromBody] decimal amount)
         {
             if (!ModelState.IsValid) throw new Exception(ModelState.ToString());
-            return _transactionAppService.Withdraw(depositViewModel.Amount);
+            var withdraw = await _transactionAppService.Withdraw(amount);
+            return withdraw;
         }
     }
 }

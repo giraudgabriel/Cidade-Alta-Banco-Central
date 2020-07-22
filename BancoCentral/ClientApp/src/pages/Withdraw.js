@@ -1,22 +1,49 @@
-import React, { Component } from 'react'
-import {InputGroup, InputGroupAddon} from "reactstrap";
-import CurrencyInput from "react-currency-masked-input";
-import {FaRegMoneyBillAlt} from "react-icons/fa";
+import React, {useState} from 'react';
+import {FaRegMoneyBillAlt} from 'react-icons/fa';
+import CurrencyInput from 'react-currency-masked-input';
+import {InputGroup, InputGroupAddon} from 'reactstrap'
 
-export class Withdraw extends Component {
-  render() {
+export function Withdraw() {
+    const [amount, setAmount] = useState('');
+
+    async function handleWithdraw(e) {
+        e.preventDefault();
+        if (amount > 0) {
+            try {
+                const response = await fetch('api/transaction/withdraw', {
+                    method: 'POST',
+                    body: amount,
+                    headers: {
+                        'Accept': 'application/json; charset=utf-8',
+                        'Content-Type': 'application/json;charset=UTF-8'
+                    }
+                })
+                const data = await response.json();
+                alert('Sacado com sucesso!');
+                setAmount('');
+            } catch (e) {
+                console.error(e);
+                alert('Dinheiro insuficiente no banco!');
+            }
+        }
+    }
+
     return (
         <div className="container">
-          <label className="badge badge-warning">Valor para sacar:</label>
-          <InputGroup>
-            <InputGroupAddon addonType="prepend">R$</InputGroupAddon>
-            <CurrencyInput className="form-control form-control-lg text-success"
-                           placeholder="0,00"/>
-            <InputGroupAddon addonType="append">
-              <button className="btn btn-success btn-lg"><FaRegMoneyBillAlt/> Sacar</button>
-            </InputGroupAddon>
-          </InputGroup>
+            <form onSubmit={(e) => handleWithdraw(e)}>
+                <label className="badge badge-warning">Valor a ser sacado:</label>
+                <InputGroup>
+                    <InputGroupAddon addonType="prepend">R$</InputGroupAddon>
+                    <CurrencyInput className="form-control form-control-lg text-success"
+                                   placeholder="0,00" value={amount}
+                                   onChange={(e, amount) => setAmount(amount)}
+                    />
+                    <InputGroupAddon addonType="append">
+                        <button type={"submit"} className="btn btn-success btn-lg"><FaRegMoneyBillAlt/> Sacar
+                        </button>
+                    </InputGroupAddon>
+                </InputGroup>
+            </form>
         </div>
     )
-  }
 }

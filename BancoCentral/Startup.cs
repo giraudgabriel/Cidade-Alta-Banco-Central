@@ -1,15 +1,10 @@
 using System;
-using BancoCentral.Infra.ORM.Contexts;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 
 namespace BancoCentral
 {
@@ -25,7 +20,9 @@ namespace BancoCentral
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
+            services.AddControllersWithViews().AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
             services.AddDistributedMemoryCache();
 
             services.AddSession(options =>
@@ -59,6 +56,7 @@ namespace BancoCentral
             app.UseHttpsRedirection();
             app.UseRouting();
             app.UseAuthorization();
+
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
             app.UseSpa(spa =>
             {

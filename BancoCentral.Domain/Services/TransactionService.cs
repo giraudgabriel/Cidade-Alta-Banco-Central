@@ -17,7 +17,7 @@ namespace BancoCentral.Domain.Services
             _repository = repository;
         }
 
-        public EntityEntry<Transaction> Deposit(decimal amount, int userId)
+        public Transaction Deposit(decimal amount, int userId)
         {
             var deposit = new Transaction
             {
@@ -28,7 +28,7 @@ namespace BancoCentral.Domain.Services
             return _repository.Add(deposit);
         }
 
-        public EntityEntry<Transaction> Transfer(decimal amount, int userId, int userIdDestiny)
+        public Transaction Transfer(decimal amount, int userId, int userIdDestiny)
         {
             var transfer = new Transaction
             {
@@ -40,7 +40,7 @@ namespace BancoCentral.Domain.Services
             return _repository.Add(transfer);
         }
 
-        public EntityEntry<Transaction> Withdraw(decimal amount, int userId)
+        public Transaction Withdraw(decimal amount, int userId)
         {
             var withdraw = new Transaction
             {

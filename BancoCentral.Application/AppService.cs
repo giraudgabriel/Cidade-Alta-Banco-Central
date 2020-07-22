@@ -13,10 +13,10 @@ namespace BancoCentral.Application
         protected readonly RepositoryUnitOfWork UnitOfWork;
         private readonly int? _userId;
 
-        protected AppService(long? userId)
+        protected AppService(int? userId)
         {
             var dbContext = new BancoCentralDbContext();
-            _userId = (int?) (userId ?? _userId);
+            _userId = userId ?? _userId;
             UnitOfWork = new RepositoryUnitOfWork(dbContext, _userId);
         }
 

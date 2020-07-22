@@ -18,8 +18,8 @@ namespace BancoCentral.Domain.Repositories
         Task<T> FindByIdAsync(long id);
         Task<T> FindFirstAsync(Expression<Func<T, bool>> @predicate);
         Task<T> FindLastAsync(Expression<Func<T, bool>> @predicate);
-        EntityEntry<T> Delete(T model);
-        EntityEntry<T> Add(T model);
+        T Delete(T model);
+        T Add(T model);
         Task<long> TotalRecordsAsync(Expression<Func<T, bool>> @predicate = null);
     }
 }

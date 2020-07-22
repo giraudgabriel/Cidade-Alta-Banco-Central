@@ -14,10 +14,6 @@ import {FaArrowCircleLeft} from 'react-icons/fa';
 import history from './history';
 
 export default class App extends Component {
-    static contextTypes = {
-        router: () => true,
-    }
-
     render() {
         return (
             <Router history={history}>

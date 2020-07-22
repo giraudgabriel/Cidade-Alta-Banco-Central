@@ -24,15 +24,15 @@ namespace BancoCentral.Domain.Services
 
         public virtual async Task<T> FindByIdAsync(long id) => await _repository.FindByIdAsync(id);
 
-        public virtual async Task<T> FindFirstAsync(Expression<Func<T, bool>> @predicate) =>
+        public virtual async Task<T> FindFirstAsync(Expression<Func<T, bool>> predicate) =>
             await _repository.FindFirstAsync(@predicate);
 
         public virtual async Task<T> FindLastAsync(Expression<Func<T, bool>> @predicate) =>
             await _repository.FindLastAsync(@predicate);
 
-        public virtual EntityEntry<T> Delete(T model) => _repository.Delete(model);
+        public virtual T Delete(T model) => _repository.Delete(model);
 
-        public virtual EntityEntry<T> Add(T model) => _repository.Add(model);
+        public virtual T Add(T model) => _repository.Add(model);
 
         public virtual async Task<long> TotalRecordsAsync(Expression<Func<T, bool>> @predicate = null) =>
             await _repository.TotalRecordsAsync(predicate);

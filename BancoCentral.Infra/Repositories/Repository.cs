@@ -73,9 +73,9 @@ namespace BancoCentral.Infra.Repositories
 
         public virtual async Task<T> FindByIdAsync(long id) => await _dbContext.Set<T>().FindAsync(id as object);
 
-        public virtual EntityEntry<T> Delete(T model) => _dbContext.Set<T>().Remove(model);
+        public virtual T Delete(T model) => _dbContext.Set<T>().Remove(model).Entity;
 
-        public virtual EntityEntry<T> Add(T model) => _dbContext.Set<T>().Add(model);
+        public virtual T Add(T model) => _dbContext.Set<T>().Add(model).Entity;
 
         public virtual async Task<long> TotalRecordsAsync(Expression<Func<T, bool>> @predicate = null)
             => predicate == null

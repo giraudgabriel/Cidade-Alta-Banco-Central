@@ -21,7 +21,7 @@ namespace BancoCentral.Application.AppServices.Transaction
             _userId = userId;
         }
 
-        public async Task<EntityEntry<Domain.Entities.Transaction>> Transfer(decimal amount, int userIdDestiny)
+        public async Task<Domain.Entities.Transaction> Transfer(decimal amount, int userIdDestiny)
         {
             if (amount <= 0) throw new Exception("O valor deve ser maior que zero!");
 
@@ -44,7 +44,7 @@ namespace BancoCentral.Application.AppServices.Transaction
             return transfer;
         }
 
-        public async Task<EntityEntry<Domain.Entities.Transaction>> Withdraw(decimal amount)
+        public async Task<Domain.Entities.Transaction> Withdraw(decimal amount)
         {
             if (amount <= 0) throw new Exception("O valor deve ser maior que zero!");
 
@@ -62,7 +62,7 @@ namespace BancoCentral.Application.AppServices.Transaction
             return withdraw;
         }
 
-        public async Task<EntityEntry<Domain.Entities.Transaction>> Deposit(decimal amount)
+        public async Task<Domain.Entities.Transaction> Deposit(decimal amount)
         {
             if (amount <= 0) throw new Exception("O valor deve ser maior que zero!");
 
