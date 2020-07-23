@@ -4,8 +4,8 @@ USE CIDADEALTA;
 
 CREATE TABLE IF NOT EXISTS user(
 	userId INT NOT NULL PRIMARY KEY auto_increment,
-	amountBank DECIMAL NOT NULL,
-    amountWallet DECIMAL NOT NULL,
+	amountBank DECIMAL(14,2) NOT NULL,
+    amountWallet DECIMAL(14,2) NOT NULL,
     name VARCHAR(150) NOT NULL,
     whitelist bit not null,
     updatedAt datetime not null
@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS transaction(
 	transactionId INT NOT NULL PRIMARY KEY auto_increment,
 	userId INT NOT NULL,
     userIdDestiny INT NULL,
-	amount DECIMAL NOT NULL,
+	amount DECIMAL(14,2) NOT NULL,
     datetime DATETIME NOT NULL,
     type INT NOT NULL
 );
@@ -25,5 +25,9 @@ ALTER TABLE TRANSACTION ADD CONSTRAINT foreign key(userIdDestiny) REFERENCES USE
 
 INSERT INTO USER (amountBank, amountWallet, name, whitelist, updatedAt) VALUES('50000.0', '5000.0', 'GABRIEL GIRAUD', true, sysdate());
 INSERT INTO USER (amountBank, amountWallet, name, whitelist, updatedAt) VALUES('50000.0', '5000.0', 'DRKZ', true, sysdate());
+insert into transaction values(null,'1', null, '50000', sysdate(), '0');
+insert into transaction values(null,'1', '2', '50000', sysdate(), '1');
+insert into transaction values(null,'1', null, '50000', sysdate(), '0');
+insert into transaction values(null,'1', '2', '50000', sysdate(), '1');
 insert into transaction values(null,'1', null, '50000', sysdate(), '0');
 insert into transaction values(null,'1', '2', '50000', sysdate(), '1');

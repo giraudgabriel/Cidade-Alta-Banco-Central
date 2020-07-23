@@ -1,7 +1,9 @@
 import React, {useState} from 'react';
-import {FaRegMoneyBillAlt} from 'react-icons/fa';
+import {FaDollarSign, FaRegMoneyBillAlt} from 'react-icons/fa';
 import CurrencyInput from 'react-currency-masked-input';
 import {InputGroup, InputGroupAddon} from 'reactstrap'
+import TransactionService from "../services/TransactionService";
+import {toast} from "react-toastify";
 
 export function Withdraw() {
     const [amount, setAmount] = useState('');
@@ -10,28 +12,24 @@ export function Withdraw() {
         e.preventDefault();
         if (amount > 0) {
             try {
-                const response = await fetch('api/transaction/withdraw', {
-                    method: 'POST',
-                    body: amount,
-                    headers: {
-                        'Accept': 'application/json; charset=utf-8',
-                        'Content-Type': 'application/json;charset=UTF-8'
-                    }
+                TransactionService.Withdraw(amount).then(async response => {
+                    await response.json();
+                    toast.success('✅ Sacado com sucesso!');
+                    setAmount('');
                 })
-                const data = await response.json();
-                alert('Sacado com sucesso!');
-                setAmount('');
             } catch (e) {
                 console.error(e);
-                alert('Dinheiro insuficiente no banco!');
+                toast.error('❌ Dinheiro insuficiente no banco!');
             }
+        }else{
+            toast.error('❌ O valor deve ser maior que zero!');
         }
     }
 
     return (
         <div className="container">
             <form onSubmit={(e) => handleWithdraw(e)}>
-                <label className="badge badge-warning">Valor a ser sacado:</label>
+                <label className="badge table-warning"><FaDollarSign />Valor a ser sacado:</label>
                 <InputGroup>
                     <InputGroupAddon addonType="prepend">R$</InputGroupAddon>
                     <CurrencyInput className="form-control form-control-lg text-success"

@@ -5,13 +5,15 @@ import {Extract} from './pages/Extract';
 import {Deposit} from './pages/Deposit';
 import {Transfer} from './pages/Transfer';
 import {Withdraw} from './pages/Withdraw';
-import './custom.css'
 import CardHeader from "reactstrap/es/CardHeader";
 import CardBody from "reactstrap/es/CardBody";
 import Card from "reactstrap/es/Card";
 import {UserHead} from "./components/UserHead";
 import {FaArrowCircleLeft} from 'react-icons/fa';
 import history from './history';
+import './custom.css'
+import {ToastContainer} from "react-toastify";
+import CardFooter from "reactstrap/es/CardFooter";
 
 export default class App extends Component {
     render() {
@@ -32,10 +34,20 @@ export default class App extends Component {
                                     <h3>Cidade Alta</h3>
                                 </div>
                                 <div className={"col-sm-7 text-right"}>
-                                    <UserHead />
+                                    <UserHead/>
                                 </div>
-                                
                             </div>
+                            <ToastContainer
+                                position="top-center"
+                                autoClose={5000}
+                                hideProgressBar={false}
+                                newestOnTop={false}
+                                closeOnClick
+                                rtl={false}
+                                pauseOnFocusLoss
+                                draggable
+                                pauseOnHover
+                            />
                         </CardHeader>
                         <CardBody>
                             <Route exact path='/' component={Home}/>
@@ -44,6 +56,7 @@ export default class App extends Component {
                             <Route path='/transfer' component={Transfer}/>
                             <Route path='/withdraw' component={Withdraw}/>
                         </CardBody>
+                        <CardFooter />
                     </Card>
                 </div>
             </Router>

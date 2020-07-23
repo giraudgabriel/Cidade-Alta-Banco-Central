@@ -7,6 +7,7 @@ import FormText from "reactstrap/es/FormText";
 import PaginationComponent from "react-reactstrap-pagination";
 import Label from "reactstrap/es/Label";
 import moment from 'moment';
+import TransactionService from "../services/TransactionService";
 
 export function Extract() {
     const [startDate, setStartDate] = useState(moment().format("YYYY-MM-DD"));
@@ -16,24 +17,12 @@ export function Extract() {
     const [qtdRecords, setQtdRecords] = useState(5);
     const [totalRecords, setTotalRecords] = useState(0);
 
-
     useEffect(() => {
         fetchData();
     }, [startDate, endDate, page, qtdRecords]);
 
-    function handlePageChange(pageNumber) {
-        console.log(`active page is ${pageNumber}`);
-        setPage(pageNumber);
-    }
-
     const fetchData = useCallback(() => {
-        fetch(`api/transaction/extract/${startDate}/${endDate}/${page}/${qtdRecords}`, {
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            }
-        }).then(response => {
-            console.log(startDate, endDate)
+        TransactionService.Extract(startDate, endDate, page, qtdRecords).then(response => {
             response.json().then(({records, totalRecords}) => {
                 setExtracts(records);
                 setTotalRecords(totalRecords)
@@ -64,7 +53,7 @@ export function Extract() {
         } else {
             return extracts.map(extract =>
                 (<tr key={extract.id} className={setColor(extract.typeDescription)}>
-                    <td><h5>{new Date(extract.dateTime).toLocaleDateString()}</h5></td>
+                    <td><h5>{moment(extract.dateTime).format("DD/MM/YYYY HH:MM")}</h5></td>
                     <td><h5>{extract.amount.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</h5></td>
                     <td><h5>{extract.typeDescription}</h5></td>
                     <td><h5>{extract?.userDestiny?.name ?? "Você"}</h5></td>
@@ -125,7 +114,8 @@ export function Extract() {
                     </div>
                     <div className={"col ml-5"}>
                         <Label className={"badge table-warning"}><FaBook/> Total de Registros: {totalRecords}</Label>
-                        <PaginationComponent totalItems={totalRecords} pageSize={qtdRecords} onSelect={handlePageChange}
+                        <PaginationComponent totalItems={totalRecords} pageSize={qtdRecords} maxPaginationNumbers={1}
+                                             defaultActivePage={page} onSelect={setPage}
                                              firstPageText={"Primeira"} lastPageText={"Última"} nextPageText={"Próxima"}
                                              previousPageText={"Anterior"} size={"sm"}/>
                     </div>
