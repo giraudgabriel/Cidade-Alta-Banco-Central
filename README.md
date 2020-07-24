@@ -8,11 +8,11 @@
 
 ### Primeiros passos Frontend
 
-```git clone https://github.com/giraudgabriel/Cidade-Alta-Banco-Central.git ```
+- ```git clone https://github.com/giraudgabriel/Cidade-Alta-Banco-Central.git ```
 
-```cd BancoCentral/BancoCentral/ClientApp ```
+- ```cd BancoCentral/BancoCentral/ClientApp ```
 
-```npm install ```
+- ```npm install ```
 
 ### ➡ [Frontend - Readme](https://github.com/giraudgabriel/Cidade-Alta-Banco-Central/blob/master/BancoCentral/ClientApp/README.md)
 
