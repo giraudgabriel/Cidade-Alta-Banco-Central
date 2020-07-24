@@ -14,15 +14,30 @@ namespace BancoCentral.Controllers
 
         public UserControler()
         {
-            _userAppService = new UserAppService(HttpContext?.Session?.GetInt32("userId") ?? 1);
+            _userAppService = new UserAppService(UserSession.UserId);
         }
 
         [HttpGet]
         [Route("")]
         public async Task<ActionResult<User>> Get()
         {
-            var user = await _userAppService.GetLoggedUser();
+            if (UserSession.UserId == null) return new ActionResult<User>(Problem("É necessário estar logado!"));
+            var user = await _userAppService.GetByPassport((int) (UserSession.UserId));
             return user;
         }
+
+        [HttpPost]
+        [Route("login")]
+        public async Task<ActionResult<User>> Login([FromBody] int passport)
+        {
+            var user = await _userAppService.GetByPassport(passport);
+            if (user == null) return new ActionResult<User>(Problem("Passaporte inválido!"));
+            UserSession.UserId = user.Id;
+            return user;
+        }
+
+        [HttpPost]
+        [Route("logout")]
+        public void Logout() => UserSession.UserId = null;
     }
 }

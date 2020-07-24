@@ -5,7 +5,7 @@ namespace BancoCentral.Application.AppServices.User
 {
     public class UserAppService : AppService<Domain.Entities.User>
     {
-        private readonly int _userId;
+        private readonly int? _userId;
         private readonly UserService _userService;
 
         public UserAppService(int? userId) : base(userId)
@@ -14,9 +14,9 @@ namespace BancoCentral.Application.AppServices.User
             _userService = new UserService(UnitOfWork.UserRepository);
         }
 
-        public async Task<Domain.Entities.User> GetLoggedUser()
+        public async Task<Domain.Entities.User> GetByPassport(int passport)
         {
-            return await _userService.FindFirstAsync(u => u.Id == _userId);
+            return await _userService.FindFirstAsync(u => u.Id == passport);
         }
     }
 }

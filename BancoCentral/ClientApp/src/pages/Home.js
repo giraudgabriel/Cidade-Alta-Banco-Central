@@ -13,7 +13,7 @@ export class Home extends Component {
                     <div className="col-lg-6">
                         <Link to="/withdraw" className="btn btn-success btn-block btn-lg" style={{
                             padding: '10% 0'
-                        }}><h1><FaWallet/> Saque</h1>
+                        }}><h1><FaWallet/> Sacar</h1>
                         </Link>
                     </div>
                     <div className="col-lg-6">
@@ -29,7 +29,7 @@ export class Home extends Component {
                         <Link to="/transfer" className="btn btn-primary btn-block btn-lg" style={{
                             padding: '10% 0'
                         }}><h1>
-                            <FaExchangeAlt/> Transferência</h1>
+                            <FaExchangeAlt/> Transferir</h1>
                         </Link>
                     </div>
                     <div className="col-lg-6">

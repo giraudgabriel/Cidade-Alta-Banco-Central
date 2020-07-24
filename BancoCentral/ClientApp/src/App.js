@@ -5,6 +5,7 @@ import Extract from './pages/Extract';
 import Deposit from './pages/Deposit';
 import Transfer from './pages/Transfer';
 import Withdraw from './pages/Withdraw';
+import Login from './pages/Login';
 import CardHeader from "reactstrap/es/CardHeader";
 import CardBody from "reactstrap/es/CardBody";
 import Card from "reactstrap/es/Card";
@@ -38,7 +39,8 @@ export default class App extends Component {
                         <CardBody>
                             <AnimatePresence exitBeforeEnter>
                                 <Switch>
-                                    <Route path='/' exact component={Home}/>
+                                    <Route path='/' exact component={Login}/>
+                                    <Route path='/home' exact component={Home}/>
                                     <Route path='/extract' exact component={Extract}/>
                                     <Route path='/deposit' exact component={Deposit}/>
                                     <Route path='/transfer' exact component={Transfer}/>

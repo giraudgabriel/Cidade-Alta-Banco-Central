@@ -22,6 +22,7 @@ export function ItemTransaction({transaction}) {
                               initial={{opacity: 0}} animate={{opacity: 1}}
                               exit={{opacity: 0}}>
                 <td><h5>{moment(transaction.dateTime).format("DD/MM/YYYY HH:MM")}</h5></td>
+                <td><h5>{transaction?.user?.name ?? "Você"}</h5></td>
                 <td><h5>{transaction?.userDestiny?.name ?? "Você"}</h5></td>
                 <td><h5>{transaction.typeDescription}</h5></td>
                 <td><h5 className={"text-right"}>{transaction.amount.toLocaleString('pt-BR', {

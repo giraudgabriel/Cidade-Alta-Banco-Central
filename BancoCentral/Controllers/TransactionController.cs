@@ -22,8 +22,10 @@ namespace BancoCentral.Controllers
 
         public TransactionController(ILogger<TransactionController> logger)
         {
-            _transactionAppService = new TransactionAppService(HttpContext?.Session?.GetInt32("userId") ?? 1);
+            if (!UserSession.CheckSession()) return;
+            _transactionAppService = new TransactionAppService((int) UserSession.UserId);
             _logger = logger;
+
         }
 
         [HttpGet("extract/{startDate:DateTime}/{endDate:DateTime}/{page:int}/{qtdRecords:int}")]

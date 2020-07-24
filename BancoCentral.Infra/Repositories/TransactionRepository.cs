@@ -22,6 +22,7 @@ namespace BancoCentral.Infra.Repositories
         {
             var extract = _dbContext.Transactions
                 .Include(t => t.UserDestiny)
+                .Include(t => t.User)
                 .Where(t => t.DateTime.Date >= startDate.Date
                             && t.DateTime.Date <= endDate.Date
                             && (t.UserId == userId || t.UserIdDestiny == userId));

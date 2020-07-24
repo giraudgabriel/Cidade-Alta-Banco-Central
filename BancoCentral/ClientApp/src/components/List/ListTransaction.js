@@ -25,16 +25,19 @@ export function ListTransaction({transactions, page, qtdRecords, totalRecords, s
             <table className="table table-dark table-borderless rounded-top rounded-bottom">
                 <thead>
                 <tr>
-                    <th className={"text-center"}><FaCalendar/>
+                    <th className={"text-left"}><FaCalendar/>
                         Data
                     </th>
-                    <th className={"text-center"}><FaUser/>
+                    <th className={"text-left"}><FaUser/>
+                        Remetente
+                    </th>
+                    <th className={"text-left"}><FaUser/>
                         Destinatário
                     </th>
-                    <th className={"text-center"}><FaMoneyCheck/>
+                    <th className={"text-left"}><FaMoneyCheck/>
                         Tipo de Transação
                     </th>
-                    <th className={"text-center"}><FaMoneyBillWave/>
+                    <th className={"text-left"}><FaMoneyBillWave/>
                         Valor
                     </th>
 

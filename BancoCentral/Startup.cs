@@ -1,6 +1,8 @@
 using System;
+using BancoCentral.Controllers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -27,10 +29,11 @@ namespace BancoCentral
 
             services.AddSession(options =>
             {
-                options.IdleTimeout = TimeSpan.FromSeconds(10);
-                options.Cookie.HttpOnly = true;
-                options.Cookie.IsEssential = true;
+                options.IdleTimeout = TimeSpan.FromMinutes(60);//You can set Time   
             });
+
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration => { configuration.RootPath = "ClientApp/build"; });
         }
@@ -47,12 +50,12 @@ namespace BancoCentral
                 app.UseExceptionHandler("/Error");
                 app.UseHsts();
             }
-
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
             app.UseRouting();
             app.UseSession();
+            UserSession.Configure(app.ApplicationServices.GetRequiredService<IHttpContextAccessor>());
             app.UseHttpsRedirection();
             app.UseRouting();
             app.UseAuthorization();
@@ -67,6 +70,7 @@ namespace BancoCentral
                     spa.UseReactDevelopmentServer(npmScript: "start");
                 }
             });
+
         }
     }
 }

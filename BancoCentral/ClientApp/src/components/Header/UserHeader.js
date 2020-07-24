@@ -3,23 +3,25 @@ import CardHeader from "reactstrap/es/CardHeader";
 import {FaPiggyBank, FaUser, FaWallet, FaSignOutAlt} from "react-icons/fa";
 import Card from "reactstrap/es/Card";
 import {connect} from "react-redux";
-import {fetchUser} from "../../actions";
 import * as PropTypes from "prop-types";
 import {toast} from "react-toastify";
+import history from "../../history";
+import {signOut} from '../../actions';
+import logo from '../../assets/logo.png'
 
 class UserHeader extends React.Component {
     componentDidMount() {
-        let {fetchUser} = this.props;
-        fetchUser();
+        if (!this.props.user) history.push('/')
     }
 
     render() {
-        let {user, history} = this.props;
+        let {user, history, signOut} = this.props;
         return <div className="row">
             <div className={"col text-left"}>
-                <h1 style={{cursor: 'pointer'}} onClick={() => history.push('/')}>Cidade Alta</h1>
+                            <img src={logo} className={"text-center mb-2"} alt="logo" style={{cursor: 'pointer', width: '75px'}}
+                                 onClick={() => user ? history.push('/home') : history.push('/')}/>
             </div>
-            <div className={"col-sm-7 text-right"}>
+            <div className={"col-sm-6 text-right"} hidden={!user}>
                 <Card className="bg-warning">
                     <CardHeader className={"text-left"}>
                         <div className={"row"}>
@@ -34,7 +36,8 @@ class UserHeader extends React.Component {
                                 style: 'currency',
                                 currency: 'BRL'
                             })}</p>
-                            <p className={"m-2 badge-danger badge btn"} onClick={()=> toast.warn("Saindo do banco...")}><FaSignOutAlt/> Sair</p>
+                            <p className={"m-2 badge-danger badge btn"}
+                               onClick={() => signOut() && toast.warn("Saindo do banco...")}><FaSignOutAlt/> Sair</p>
                         </div>
                     </CardHeader>
                 </Card>
@@ -44,7 +47,6 @@ class UserHeader extends React.Component {
 }
 
 UserHeader.propTypes = {
-    fetchUser: PropTypes.any,
     user: PropTypes.any
 }
 const mapStateToProps = state => {
@@ -53,4 +55,4 @@ const mapStateToProps = state => {
     }
 };
 
-export default connect(mapStateToProps, {fetchUser})(UserHeader);
+export default connect(mapStateToProps, {signOut})(UserHeader);
