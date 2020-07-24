@@ -1,7 +1,7 @@
 import React from 'react'
 import {FaUser, FaCalendar, FaMoneyCheck, FaSlidersH, FaMoneyBillWave} from 'react-icons/fa';
 import {Pagination} from "../Pagination/Pagination";
-import {ItemTransaction} from "../Item/ItemTransaction";
+import ItemTransaction from "../Item/ItemTransaction";
 
 export function ListTransaction({transactions, page, qtdRecords, totalRecords, setPage, setQtdRecords}) {
 
