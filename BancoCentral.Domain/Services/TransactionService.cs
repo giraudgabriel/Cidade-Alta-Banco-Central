@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using BancoCentral.Domain.Entities;
 using BancoCentral.Domain.Enums;
 using BancoCentral.Domain.Repositories;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
+using BancoCentral.Domain.Services.Interfaces;
 
 namespace BancoCentral.Domain.Services
 {

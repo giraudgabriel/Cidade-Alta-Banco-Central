@@ -1,52 +1,40 @@
 import React, {useState} from 'react';
-import {FaDollarSign, FaRegMoneyBillAlt} from 'react-icons/fa';
-import CurrencyInput from 'react-currency-masked-input';
-import {InputGroup, InputGroupAddon} from 'reactstrap'
-import 'react-toastify/dist/ReactToastify.css';
-import TransactionService from "../services/TransactionService";
 import {toast} from "react-toastify";
+import {createDeposit, fetchUser} from '../actions'
+import {connect} from "react-redux";
+import {FormTransaction} from "../components/Form/FormTransaction";
+import {motion} from 'framer-motion';
 
-export function Deposit() {
+function Deposit({createDeposit, fetchUser}) {
     const [amount, setAmount] = useState('');
 
     async function handleDeposit(e) {
         e.preventDefault();
-        console.log(amount)
         if (amount > 0) {
-            try {
-                await TransactionService.Deposit(amount).then(async response => {
-                    await response.json();
-                    toast.success('✅ Depositado com sucesso!', {
-                        position: "top-center",
-                    });
-                    setAmount('');
-                });
-            } catch (e) {
-                toast.error('❌ Dinheiro insuficiente!', {
-                    position: "top-center",
-                });
+            const response = await createDeposit({amount});
+            if (!response?.detail) {
+                toast.success('✅ Depositado com sucesso!', {position: "top-center"});
+                setAmount('');
+                fetchUser();
+            } else {
+                toast.error(`❌ ${response.detail}`)
             }
-        }else{
+        } else {
             toast.error('❌ Preencha os campos corretamente!');
         }
     }
 
     return (
-        <div className="container">
-            <form onSubmit={(e) => handleDeposit(e)}>
-                <label className="badge table-warning"><FaDollarSign />Valor a ser depositado:</label>
-                <InputGroup>
-                    <InputGroupAddon addonType="prepend">R$</InputGroupAddon>
-                    <CurrencyInput className="form-control form-control-lg text-success"
-                                   placeholder="0,00" value={amount}
-                                   onChange={(e, amount) => setAmount(amount)}
-                    />
-                    <InputGroupAddon addonType="append">
-                        <button type={"submit"} className="btn btn-success btn-lg"><FaRegMoneyBillAlt/> Depositar
-                        </button>
-                    </InputGroupAddon>
-                </InputGroup>
-            </form>
-        </div>
+        <motion.div className="container" initial={{opacity: 0}} animate={{opacity: 1}}
+                    exit={{opacity: 0}}>
+            <FormTransaction
+                amount={amount}
+                setAmount={setAmount}
+                buttonText={"Depositar"}
+                label={"Valor a ser depositado"}
+                handleSubmit={handleDeposit}/>
+        </motion.div>
     )
 }
+
+export default connect(null, {createDeposit, fetchUser})(Deposit)

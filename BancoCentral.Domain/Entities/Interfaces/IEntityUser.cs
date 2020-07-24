@@ -1,4 +1,4 @@
-﻿namespace BancoCentral.Domain.Entities
+﻿namespace BancoCentral.Domain.Entities.Interfaces
 {
     public interface IEntityUser : IEntity
     {

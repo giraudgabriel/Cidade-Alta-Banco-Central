@@ -1,14 +1,28 @@
 /* Provide sufficient contrast against white background */
 a {
-  color: #0366d6;
+    color: #0366d6;
 }
 
 code {
-  color: #E01A76;
+    color: #E01A76;
 }
 
 .btn-primary {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
+}
+
+html, body {
+    height: 100%;
+    background: rgb(25, 25, 25);
+    background: linear-gradient(131deg, rgba(25, 25, 25, 1) 0%, rgba(96, 89, 75, 1) 100%);
+    background-repeat: no-repeat;
+}
+
+.background {
+    background: rgb(25, 25, 25);
+    color: white;
+    background: linear-gradient(131deg, rgba(25, 25, 25, 1) 0%, rgba(96, 89, 75, 1) 100%);
+    background-repeat: no-repeat;
 }

@@ -1,47 +1,41 @@
 import React, {useState} from 'react';
-import {FaDollarSign, FaRegMoneyBillAlt} from 'react-icons/fa';
-import CurrencyInput from 'react-currency-masked-input';
-import {InputGroup, InputGroupAddon} from 'reactstrap'
-import TransactionService from "../services/TransactionService";
 import {toast} from "react-toastify";
+import {connect} from 'react-redux';
+import {createWithdraw, fetchUser} from '../actions';
+import {FormTransaction} from "../components/Form/FormTransaction";
+import {motion} from 'framer-motion';
 
-export function Withdraw() {
+function Withdraw({createWithdraw, fetchUser}) {
     const [amount, setAmount] = useState('');
 
     async function handleWithdraw(e) {
         e.preventDefault();
         if (amount > 0) {
-            try {
-                TransactionService.Withdraw(amount).then(async response => {
-                    await response.json();
-                    toast.success('✅ Sacado com sucesso!');
-                    setAmount('');
-                })
-            } catch (e) {
-                console.error(e);
-                toast.error('❌ Dinheiro insuficiente no banco!');
+            const response = await createWithdraw({amount});
+            if (!response?.detail) {
+                toast.success('✅ Sacado com sucesso!');
+                setAmount('');
+                fetchUser();
+            } else {
+                toast.error(`❌ ${response.detail}`)
             }
-        }else{
+        } else {
             toast.error('❌ O valor deve ser maior que zero!');
         }
     }
 
     return (
-        <div className="container">
-            <form onSubmit={(e) => handleWithdraw(e)}>
-                <label className="badge table-warning"><FaDollarSign />Valor a ser sacado:</label>
-                <InputGroup>
-                    <InputGroupAddon addonType="prepend">R$</InputGroupAddon>
-                    <CurrencyInput className="form-control form-control-lg text-success"
-                                   placeholder="0,00" value={amount}
-                                   onChange={(e, amount) => setAmount(amount)}
-                    />
-                    <InputGroupAddon addonType="append">
-                        <button type={"submit"} className="btn btn-success btn-lg"><FaRegMoneyBillAlt/> Sacar
-                        </button>
-                    </InputGroupAddon>
-                </InputGroup>
-            </form>
-        </div>
+        <motion.div className="container" initial={{opacity: 0}} animate={{opacity: 1}}
+                    exit={{opacity: 0}}>
+            <FormTransaction
+                amount={amount}
+                setAmount={setAmount}
+                buttonText={"Sacar"}
+                label={"Valor a ser sacado"}
+                handleSubmit={handleWithdraw}/>
+        </motion.div>
     )
 }
+
+export default connect(null, {createWithdraw, fetchUser})(Withdraw);
+

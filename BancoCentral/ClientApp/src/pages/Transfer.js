@@ -1,52 +1,45 @@
 import React, {useState} from 'react';
-import {FaExchangeAlt} from 'react-icons/fa';
-import CurrencyInput from 'react-currency-masked-input';
-import {InputGroup, InputGroupAddon} from 'reactstrap'
-import Input from "reactstrap/es/Input";
 import {toast} from "react-toastify";
-import TransactionService from "../services/TransactionService";
-import {FaDollarSign} from "react-icons/fa";
+import {connect} from "react-redux";
+import {createTransfer, fetchUser} from "../actions";
+import {FormTransaction} from "../components/Form/FormTransaction";
+import {motion} from 'framer-motion';
 
-export function Transfer() {
+function Transfer({createTransfer, fetchUser}) {
     const [amount, setAmount] = useState('');
     const [passport, setPassport] = useState('');
 
     async function handleTransfer(e) {
         e.preventDefault();
         if (amount > 0 && passport !== '') {
-            try {
-                TransactionService.Transfer(amount, passport).then(async response => {
-                    await response.json();
-                    toast.success('✅ Transferido com sucesso!');
-                    setAmount('');
-                })
-            } catch (e) {
-                toast.error('❌ Algo deu errado!');
+            const response = await createTransfer({amount, passport})
+            if (!response?.detail) {
+                toast.success('✅ Transferido com sucesso!');
+                setAmount('');
+                fetchUser();
+            } else {
+                toast.error(`❌ ${response.detail}`)
             }
-        }else{
+
+        } else {
             toast.error('❌ Preencha os campos corretamente!');
         }
     }
 
     return (
-        <div className="container">
-            <form onSubmit={(e) => handleTransfer(e)}>
-                <label className="badge table-warning"><FaDollarSign />Valor a ser transferido:</label>
-                <InputGroup>
-                    <InputGroupAddon addonType="prepend">R$</InputGroupAddon>
-                    <CurrencyInput className="form-control form-control-lg text-success"
-                                   placeholder="0,00" value={amount}
-                                   onChange={(e, amount) => setAmount(amount)}
-                    />
-                    <InputGroupAddon addonType="prepend"> Passaporte</InputGroupAddon>
-                    <Input placeholder="Passaporte" value={passport} onChange={(e) => setPassport(e.target.value)}
-                           bsSize={"lg"} type={"number"}/>
-                    <InputGroupAddon addonType="append">
-                        <button type={"submit"} className="btn btn-success btn-lg"><FaExchangeAlt/> Transferir
-                        </button>
-                    </InputGroupAddon>
-                </InputGroup>
-            </form>
-        </div>
+        <motion.div className="container" initial={{opacity: 0}} animate={{opacity: 1}}
+                    exit={{opacity: 0}}>
+            <FormTransaction
+                amount={amount}
+                setAmount={setAmount}
+                passport={passport}
+                setPassport={setPassport}
+                buttonText={"Transferir"}
+                label={"Valor a ser transferido"}
+                handleSubmit={handleTransfer}
+            />
+        </motion.div>
     )
 }
+
+export default connect(null, {createTransfer, fetchUser})(Transfer)

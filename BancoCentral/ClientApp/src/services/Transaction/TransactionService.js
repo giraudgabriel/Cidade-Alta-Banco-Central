@@ -1,5 +1,5 @@
 ﻿class TransactionService {
-    async Deposit(amount) {
+    async createDeposit(amount) {
         try {
             return await fetch('api/transaction/deposit', {
                 method: 'POST',
@@ -15,7 +15,7 @@
         }
     }
 
-    async Withdraw(amount) {
+    async createWithdraw(amount) {
         try {
             return await fetch('api/transaction/withdraw', {
                 method: 'POST',
@@ -31,7 +31,7 @@
         }
     }
 
-    async Extract(startDate, endDate, page, qtdRecords) {
+    async fetchExtract(startDate, endDate, page, qtdRecords) {
         return await fetch(`api/transaction/extract/${startDate}/${endDate}/${page}/${qtdRecords}`, {
             headers: {
                 'Content-Type': 'application/json',
@@ -40,7 +40,7 @@
         })
     }
 
-    async Transfer(amount, passport) {
+    async createTransfer(amount, passport) {
         try {
             return await fetch('api/transaction/transfer', {
                 method: 'POST',

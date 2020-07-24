@@ -1,12 +1,11 @@
-﻿using BancoCentral.Domain.Entities;
-using BancoCentral.Domain.Repositories;
-using System;
+﻿using System;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
+using BancoCentral.Domain.Entities.Interfaces;
+using BancoCentral.Domain.Repositories.Interfaces;
 
-namespace BancoCentral.Domain.Services
+namespace BancoCentral.Domain.Services.Interfaces
 {
     public abstract class DomainService<T> where T : class, IEntity
     {

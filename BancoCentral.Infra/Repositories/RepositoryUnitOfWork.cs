@@ -1,6 +1,7 @@
 ﻿using BancoCentral.Domain.Repositories;
 using System;
 using System.Threading.Tasks;
+using BancoCentral.Domain.Repositories.Interfaces;
 using BancoCentral.Infra.ORM.Contexts;
 using Microsoft.EntityFrameworkCore;
 

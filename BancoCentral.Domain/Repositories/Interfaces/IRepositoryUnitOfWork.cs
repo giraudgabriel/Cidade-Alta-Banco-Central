@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace BancoCentral.Domain.Repositories
+namespace BancoCentral.Domain.Repositories.Interfaces
 {
     public interface IRepositoryUnitOfWork : IDisposable
     {

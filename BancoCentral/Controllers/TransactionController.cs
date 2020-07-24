@@ -5,6 +5,7 @@ using BancoCentral.Application.AppServices.Transaction;
 using BancoCentral.Domain.Entities;
 using BancoCentral.Domain.Objects;
 using BancoCentral.ViewModels;
+using BancoCentral.ViewModels.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
@@ -36,25 +37,43 @@ namespace BancoCentral.Controllers
         public async Task<ActionResult<Transaction>> Transfer(
             [FromBody] TransferViewModel transferViewModel)
         {
-            if (!ModelState.IsValid) throw new Exception(ModelState.ToString());
-            var transfer = await _transactionAppService.Transfer(transferViewModel.Amount, transferViewModel.Passport);
-            return transfer;
+            try
+            {
+                if (!ModelState.IsValid) throw new Exception(ModelState.ToString());
+                return await _transactionAppService.Transfer(transferViewModel.Amount, transferViewModel.Passport);
+            }
+            catch (Exception e)
+            {
+                return new ActionResult<Transaction>(Problem(e.Message));
+            }
         }
 
         [HttpPost("deposit")]
         public async Task<ActionResult<Transaction>> Deposit([FromBody] decimal amount)
         {
-            if (!ModelState.IsValid) throw new Exception(ModelState.ToString());
-            var deposit = await _transactionAppService.Deposit(amount);
-            return deposit;
+            try
+            {
+                if (!ModelState.IsValid) throw new Exception(ModelState.ToString());
+                return await _transactionAppService.Deposit(amount);
+            }
+            catch (Exception e)
+            {
+                return new ActionResult<Transaction>(Problem(e.Message));
+            }
         }
 
         [HttpPost("withdraw")]
         public async Task<ActionResult<Transaction>> Withdraw([FromBody] decimal amount)
         {
-            if (!ModelState.IsValid) throw new Exception(ModelState.ToString());
-            var withdraw = await _transactionAppService.Withdraw(amount);
-            return withdraw;
+            try
+            {
+                if (!ModelState.IsValid) throw new Exception(ModelState.ToString());
+                return await _transactionAppService.Withdraw(amount);
+            }
+            catch (Exception e)
+            {
+                return new ActionResult<Transaction>(Problem(e.Message));
+            }
         }
     }
 }

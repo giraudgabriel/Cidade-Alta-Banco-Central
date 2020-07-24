@@ -1,6 +1,7 @@
 ﻿using System;
 using BancoCentral.Domain.Entities;
 using BancoCentral.Domain.Repositories;
+using BancoCentral.Domain.Services.Interfaces;
 
 namespace BancoCentral.Domain.Services
 {

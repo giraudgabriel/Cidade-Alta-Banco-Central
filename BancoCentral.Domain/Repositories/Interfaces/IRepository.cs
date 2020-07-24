@@ -3,9 +3,10 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using BancoCentral.Domain.Entities;
+using BancoCentral.Domain.Entities.Interfaces;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
-namespace BancoCentral.Domain.Repositories
+namespace BancoCentral.Domain.Repositories.Interfaces
 {
     public interface IRepository<T> where T : class, IEntity
     {

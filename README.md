@@ -1,2 +1,7 @@
-# Cidade-Alta-Banco-Central
-Repositório dedicado a vaga Fullstack Developer na Cidade Alta RP
+# Bem vindo ao Banco Central - Cidade Alta!
+
+Este é um repositório dedicado ao Banco Central do Cidade Alta, onde nele é possível:
+- Sacar uma quantia do banco para sua carteira
+- Depositar o saldo em sua carteira
+- Transferir para um passaporte uma determinada quantia
+- Checar o extrato por período (Data Inicial) - (Data Final)

@@ -23,14 +23,12 @@ namespace BancoCentral.Application.AppServices.Transaction
 
         public async Task<Domain.Entities.Transaction> Transfer(decimal amount, int userIdDestiny)
         {
-            if (amount <= 0) throw new Exception("O valor deve ser maior que zero!");
-
+            ValidationTransaction.ValidateAmount(amount);
+            ValidationTransaction.ValidateUserTransfer(_userId, userIdDestiny);
             var userDestiny = await _userService.FindFirstAsync(u => u.Id == userIdDestiny);
-            if (userDestiny == null) throw new Exception("Passaporte inválido!");
-
+            ValidationTransaction.ValidatePassport(userDestiny);
             var user = await _userService.FindFirstAsync(u => u.Id == _userId);
-            if (user.AmountBank < amount)
-                throw new Exception("Você não possui a quantia necessária no banco para transferir!");
+            ValidationTransaction.ValidateAmountBank(amount, user);
 
             var transfer = _transactionService.Transfer(amount, _userId, userIdDestiny);
 
@@ -46,10 +44,9 @@ namespace BancoCentral.Application.AppServices.Transaction
 
         public async Task<Domain.Entities.Transaction> Withdraw(decimal amount)
         {
-            if (amount <= 0) throw new Exception("O valor deve ser maior que zero!");
-
+            ValidationTransaction.ValidateAmount(amount);
             var user = await _userService.FindFirstAsync(u => u.Id == _userId);
-            if (user.AmountBank < amount) throw new Exception("Você não possui a quantia no banco!");
+            ValidationTransaction.ValidateAmountBank(amount, user);
 
             var withdraw = _transactionService.Withdraw(amount, _userId);
 
@@ -64,10 +61,9 @@ namespace BancoCentral.Application.AppServices.Transaction
 
         public async Task<Domain.Entities.Transaction> Deposit(decimal amount)
         {
-            if (amount <= 0) throw new Exception("O valor deve ser maior que zero!");
-
+            ValidationTransaction.ValidateAmount(amount);
             var user = await _userService.FindFirstAsync(u => u.Id == _userId);
-            if (user.AmountWallet < amount) throw new Exception("Você não possui a quantia na carteira!");
+            ValidationTransaction.ValidateAmountWallet(amount, user);
 
             var deposit = _transactionService.Deposit(amount, _userId);
 

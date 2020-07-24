@@ -1,5 +1,6 @@
 ﻿#nullable enable
 using System;
+using BancoCentral.Domain.Entities.Interfaces;
 using BancoCentral.Domain.Enums;
 
 namespace BancoCentral.Domain.Entities

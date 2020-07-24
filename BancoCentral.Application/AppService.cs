@@ -1,9 +1,7 @@
-﻿using BancoCentral.Domain.Entities;
-using BancoCentral.Infra.Repositories;
+﻿using BancoCentral.Infra.Repositories;
 using System;
-using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
+using BancoCentral.Domain.Entities.Interfaces;
 using BancoCentral.Infra.ORM.Contexts;
 
 namespace BancoCentral.Application

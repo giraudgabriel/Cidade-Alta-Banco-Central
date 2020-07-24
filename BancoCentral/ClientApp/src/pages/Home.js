@@ -1,13 +1,14 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import {FaRegListAlt, FaWallet, FaEnvelopeOpenText, FaExchangeAlt} from 'react-icons/fa';
-
+import {motion} from 'framer-motion';
 export class Home extends Component {
     static displayName = Home.name;
 
     render() {
         return (
-            <>
+            <motion.div initial={{opacity: 0}} animate={{opacity: 1}}
+                     exit={{opacity: 0}}>
                 <div className="row mb-3">
                     <div className="col-lg-6">
                         <Link to="/withdraw" className="btn btn-success btn-block btn-lg" style={{
@@ -16,7 +17,7 @@ export class Home extends Component {
                         </Link>
                     </div>
                     <div className="col-lg-6">
-                        <Link to="/deposit" className="btn btn-warning btn-block btn-lg" style={{
+                        <Link to="/deposit" className="btn btn-dark btn-block btn-lg" style={{
                             padding: '10% 0'
                         }}><h1>
                             <FaEnvelopeOpenText/> Depositar</h1>
@@ -38,7 +39,7 @@ export class Home extends Component {
                         </Link>
                     </div>
                 </div>
-            </>
+            </motion.div>
         );
     }
 }
