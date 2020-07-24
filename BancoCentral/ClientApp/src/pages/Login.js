@@ -26,9 +26,9 @@ function Login({signIn}) {
         }
     }
 
-    return (<motion.div>
+    return (<motion.div initial={{opacity: 0}} animate={{opacity: 1}} exit={{opacity: 0}}>
         <form onSubmit={e => handleLogin(e)}>
-            <label className={"badge table-warning"}><FaUser /> Digite o passaporte para entrar:</label>
+            <label className={"badge table-warning"}><FaUser/> Digite o passaporte para entrar:</label>
             <InputGroup>
                 <Input placeholder={"Passaporte"} type={"number"} value={passport}
                        onChange={(e) => setPassport(e.target.value)}/>
