@@ -1,6 +1,6 @@
 import React from 'react'
 import {InputGroup, InputGroupAddon, Input} from 'reactstrap'
-import {FaDollarSign, FaExchangeAlt} from 'react-icons/fa'
+import {FaDollarSign} from 'react-icons/fa'
 import CurrencyInput from 'react-currency-masked-input';
 
 export function FormTransaction({
@@ -32,7 +32,7 @@ export function FormTransaction({
                     bsSize={"lg"}
                     type={"number"}/>
                 <InputGroupAddon addonType="append">
-                    <button type={"submit"} className="btn btn-success btn-lg"><FaExchangeAlt/> {buttonText}
+                    <button type={"submit"} className="btn btn-success btn-lg"><FaDollarSign/> {buttonText}
                     </button>
                 </InputGroupAddon>
             </InputGroup>
